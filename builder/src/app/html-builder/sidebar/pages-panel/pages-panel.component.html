@@ -1,0 +1,98 @@
+<button
+  class="new-page-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="loading$ | async"
+  (click)="createNewPage()"
+>
+  <mat-icon svgIcon="add"></mat-icon>
+  <span trans>New Page</span>
+</button>
+
+<div class="content-panel">
+  <div class="header" trans>Active Page</div>
+
+  <div class="input-container">
+    <select name="active-page" id="active-page" [formControl]="activePageControl">
+      <option [ngValue]="page.id" *ngFor="let page of state.pages$ | async">
+        {{ page.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="active-page-actions">
+    <button
+      mat-button
+      color="warn"
+      [disabled]="!canDeleteSelectedPage() || (loading$ | async)"
+      (click)="deleteSelectedPage()"
+      [matTooltip]="'Delete' | trans"
+      trans
+    >
+      Delete
+    </button>
+    <button
+      mat-button
+      color="accent"
+      [disabled]="loading$ | async"
+      (click)="duplicateSelectedPage()"
+      [matTooltip]="'Duplicate' | trans"
+      trans
+    >
+      Duplicate
+    </button>
+  </div>
+</div>
+
+<form
+  class="page-options many-inputs content-panel"
+  (ngSubmit)="updateSelectedPage()"
+  [formGroup]="pageForm"
+  ngNativeValidate
+>
+  <div class="header" trans>Page SEO Options</div>
+
+  <div class="input-container">
+    <label for="selected-page-name" trans>Page Name</label>
+    <input
+      type="text"
+      name="selected-page-name"
+      id="selected-page-name"
+      formControlName="name"
+      required
+    />
+  </div>
+
+  <div class="input-container">
+    <label for="selected-page-title" trans>Page Title</label>
+    <input
+      type="text"
+      name="selected-page-title"
+      id="selected-page-title"
+      formControlName="title"
+    />
+  </div>
+
+  <div class="input-container">
+    <label for="selected-page-description" trans>Page Description</label>
+    <textarea
+      type="text"
+      name="selected-page-description"
+      id="selected-page-description"
+      formControlName="description"
+    ></textarea>
+  </div>
+
+  <div class="input-container">
+    <label for="selected-page-keywords" trans>Page Keywords</label>
+    <input
+      type="text"
+      name="selected-page-keywords"
+      id="selected-page-keywords"
+      formControlName="keywords"
+    />
+    <p trans>Separate each one with a comma.</p>
+  </div>
+
+  <button type="submit" mat-raised-button color="accent" trans>Update</button>
+</form>

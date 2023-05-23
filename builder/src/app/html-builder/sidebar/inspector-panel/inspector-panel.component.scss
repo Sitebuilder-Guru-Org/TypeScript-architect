@@ -1,0 +1,47 @@
+@import "variables";
+
+inspector-panel {
+  display: block;
+  overflow: auto;
+
+  .breadcrumbs {
+    font-size: 1.2rem;
+    color: mat-color($app-foreground, text);
+
+    .crumb-container:not(.last) {
+      display: inline-flex;
+      align-items: center;
+
+      &:hover .crumb {
+        text-decoration: underline;
+      }
+    }
+
+    .crumb {
+      text-transform: capitalize;
+    }
+
+    .last .crumb {
+      display: block;
+      font-size: 1.5rem;
+      margin: 15px 0 30px;
+      font-weight: 500;
+      cursor: initial;
+    }
+
+    .mat-icon {
+      vertical-align: sub;
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .edit-layout-button {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .mat-expansion-panel .mat-expansion-panel-body {
+    margin: 15px;
+  }
+}

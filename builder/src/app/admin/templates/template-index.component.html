@@ -1,0 +1,88 @@
+<div class="datatable-page-header">
+  <h1 trans>Templates</h1>
+
+  <div class="header">
+    <datatable-filters pluralName="templates"></datatable-filters>
+    <div class="action-buttons">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="showCrupdateTemplateModal()"
+        *ngIf="currentUser.hasPermission('templates.create')"
+        class="button-with-icon"
+      >
+        <mat-icon svgIcon="add"></mat-icon>
+        <span trans>Upload New Template</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="datatable responsive-table">
+  <mat-progress-bar
+    class="loading-bar"
+    mode="indeterminate"
+    color="accent"
+    *ngIf="datatable.paginator && datatable.paginator.loading$ | async"
+  ></mat-progress-bar>
+  <table class="material-table">
+    <thead>
+      <tr>
+        <th table-header-checkbox></th>
+        <th table-sort-header="name" trans>Template</th>
+        <th table-sort-header trans>Category</th>
+        <th trans>Last Updated</th>
+        <th></th>
+      </tr>
+      <tr *ngIf="datatable.selectedRows$.value.length as selectedCount">
+        <th colspan="5">
+          <div
+            class="bulk-actions-title"
+            [transValues]="{count: selectedCount, resource: 'template(s)'}"
+            trans
+          >
+            :count :resource selected:
+          </div>
+          <div class="bulk-actions">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="maybeDeleteSelectedTemplates()"
+              *ngIf="currentUser.hasPermission('templates.delete')"
+              trans
+            >
+              Delete
+            </button>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let template of templates$ | async">
+        <td [table-body-checkbox]="template.name"></td>
+        <td>
+          <div class="column-with-image">
+            <img [src]="getTemplateThumbnail(template)" alt="" />
+            <span>{{ template.config.name }}</span>
+          </div>
+        </td>
+        <td data-label="Category">{{ template.config.category }}</td>
+        <td data-label="Last Updated">{{ template.updated_at | formattedDate }}</td>
+        <td class="edit-column">
+          <button
+            mat-icon-button
+            (click)="showCrupdateTemplateModal(template)"
+            *ngIf="currentUser.hasPermission('templates.update')"
+            [matTooltip]="'Edit template' | trans"
+          >
+            <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <no-results-message svgImage="insert-block.svg" *ngIf="datatable.paginator.noResults$ | async">
+    <span primary-text>No templates have been created yet</span>
+  </no-results-message>
+  <datatable-footer></datatable-footer>
+</div>

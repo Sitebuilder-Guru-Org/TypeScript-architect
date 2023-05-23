@@ -1,0 +1,23 @@
+<section class="categories" dragElFromSidebarToPreview>
+  <mat-accordion>
+    <mat-expansion-panel
+      class="category mat-elevation-z"
+      *ngFor="let category of elements.categories$ | async; index as index"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title trans>{{ category }}</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="elements-grid">
+        <div
+          class="element builder-drag-handle"
+          *ngFor="let element of getElementsForCategory(category)"
+          [attr.data-name]="element.name"
+        >
+          <mat-icon [svgIcon]="element.icon"></mat-icon>
+          <div class="name" trans>{{ element.name }}</div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>

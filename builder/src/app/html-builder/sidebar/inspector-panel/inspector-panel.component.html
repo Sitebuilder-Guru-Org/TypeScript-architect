@@ -1,0 +1,117 @@
+<div class="breadcrumbs" *ngIf="path.length">
+  <span
+    class="crumb-container"
+    *ngFor="let item of path; last as last"
+    (mouseenter)="contextBoxes.repositionBox(contextType.Hover, item.node)"
+    [class.last]="last"
+    (mouseleave)="contextBoxes.hideBox(contextType.Hover)"
+  >
+    <button class="crumb no-style" (click)="livePreview.setSelectedContext(item.node)">{{ item.name }}</button>
+    <mat-icon svgIcon="keyboard-arrow-right" *ngIf="!last"></mat-icon>
+  </span>
+</div>
+
+<ng-container *ngFor="let action of state.selected?.el?.editActions">
+  <button
+    class="edit-layout-button"
+    mat-flat-button
+    (click)="action.onClick(state.selected.node)"
+    color="accent"
+    trans
+  >
+    {{ action.name }}
+  </button>
+</ng-container>
+
+<mat-accordion>
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Attributes)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Settings</mat-panel-title>
+    </mat-expansion-panel-header>
+    <attributes-panel class="panel-body"></attributes-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Background)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Background</mat-panel-title>
+    </mat-expansion-panel-header>
+    <background-panel class="panel-body"></background-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Shadow)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Shadow</mat-panel-title>
+    </mat-expansion-panel-header>
+    <shadows-panel class="panel-body"></shadows-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Padding)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Padding</mat-panel-title>
+    </mat-expansion-panel-header>
+    <spacing-panel [type]="spacingType.Padding" class="panel-body"></spacing-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Margin)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Margin</mat-panel-title>
+    </mat-expansion-panel-header>
+    <spacing-panel [type]="spacingType.Margin" class="panel-body"></spacing-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Text)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Typography</mat-panel-title>
+    </mat-expansion-panel-header>
+    <typography-panel class="panel-body"></typography-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Border)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Border</mat-panel-title>
+    </mat-expansion-panel-header>
+    <spacing-panel [type]="spacingType.BorderWidth" class="panel-body">
+      <border-style-controls></border-style-controls>
+    </spacing-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    class="category mat-elevation-z"
+    *ngIf="canEdit(editableProp.Border)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title trans>Border Roundness</mat-panel-title>
+    </mat-expansion-panel-header>
+    <spacing-panel
+      [type]="spacingType.BorderRadius"
+      class="panel-body"
+      sliderMax="30"
+    ></spacing-panel>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<no-results-message *ngIf="!state.selected?.node" svgImage="the-search.svg">
+  <span primary-text trans>Nothing is selected.</span>
+  <span secondary-text trans>Click on any element on the right to inspect and modify it.</span>
+</no-results-message>

@@ -1,0 +1,93 @@
+<form [formGroup]="projectSettings.form" (ngSubmit)="projectSettings.submitForm()" ngNativeValidate>
+  <div class="tab-content many-inputs">
+    <div class="info-banner">
+      <svg-image class="icon" name="website-builder.svg"></svg-image>
+      <div class="banner-content">
+        <div class="banner-title">
+          <span trans *ngIf="projectSettings.project.published">Your site is published.</span>
+          <span trans *ngIf="!projectSettings.project.published">Your site is not published.</span>
+        </div>
+        <button
+          type="button"
+          color="accent"
+          [disabled]="projectSettings.loading$ | async"
+          (click)="toggleProjectState(!projectSettings.project.published)"
+          mat-stroked-button
+        >
+          <span trans *ngIf="projectSettings.project.published">Make Private</span>
+          <span trans *ngIf="!projectSettings.project.published">Publish</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <label for="url-type" trans>Publish Destination</label>
+      <select id="url-type" formControlName="publishDestination">
+        <option value="default" trans>
+          Default ({{ projectUrl.getDefaultUrl(projectSettings.project) }})
+        </option>
+        <option
+          *ngIf="settings.get('builder.enable_subdomains')"
+          value="subdomain"
+          [transValues]="{siteName: settings.get('branding.site_name')}"
+          trans
+        >
+          Subdomain ({{ projectUrl.getSubdomainUrl(projectSettings.project) }})
+        </option>
+        <option
+          value="customDomain"
+          *ngIf="
+            settings.get('builder.enable_custom_domains') &&
+            currentUser.hasPermission('custom_domains.create')
+          "
+          trans
+        >
+          Your own branded domain
+        </option>
+      </select>
+    </div>
+
+    <ng-container *ngIf="projectSettings.form.get('publishDestination').value === 'customDomain'">
+      <div class="input-container" *ngIf="(userDomains.domains$ | async)?.length">
+        <label for="custom-domain-id" trans>Select Custom Domain</label>
+        <select id="custom-domain-id" formControlName="customDomainId">
+          <option [value]="null" disabled trans>None</option>
+          <option [value]="domain.id" *ngFor="let domain of userDomains.domains$ | async" trans>
+            {{ domain.host }}
+          </option>
+        </select>
+      </div>
+
+      <no-results-message
+        *ngIf="userDomains.fetched && !(userDomains.domains$ | async)?.length"
+        class="no-custom-domain-msg"
+      >
+        <span primary-text trans>You have not connected any domains yet.</span>
+        <div secondary-text>
+          <button
+            type="button"
+            color="accent"
+            [disabled]="projectSettings.loading$ | async"
+            (click)="openConnectDomainModal()"
+            mat-stroked-button
+            trans
+          >
+            Connect Custom Domain
+          </button>
+        </div>
+      </no-results-message>
+    </ng-container>
+  </div>
+
+  <div class="settings-modal-actions">
+    <button
+      type="submit"
+      mat-raised-button
+      color="accent"
+      [disabled]="projectSettings.loading$ | async"
+      trans
+    >
+      Save
+    </button>
+  </div>
+</form>

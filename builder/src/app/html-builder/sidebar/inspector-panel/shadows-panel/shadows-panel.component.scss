@@ -1,0 +1,20 @@
+@import "variables";
+
+:host {
+  display: block;
+
+
+  ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 35px;
+  }
+}
+
+.mat-button-toggle-group {
+  display: flex;
+  width: 80%;
+  margin: 0 auto 20px;
+}
+
+.mat-button-toggle {
+  flex: 1 1 auto;
+}

@@ -1,0 +1,25 @@
+<button mat-stroked-button class="img-btn" type="button" (click)="openColorpickerPanel()">
+  <span class="img-btn-title" trans>Color</span>
+  <span
+    class="img-btn-preview transparent-texture"
+    [style.background-color]="previewBgColor$ | async"
+    [class.no-value]="!(previewBgColor$ | async)"
+  >
+  </span>
+</button>
+
+<button mat-stroked-button class="img-btn" type="button" (click)="openBackgroundPanel()">
+  <span class="img-btn-title" trans>Image & Gradient</span>
+  <span
+    class="img-btn-preview transparent-texture"
+    [style.background-image]="previewBgImg$ | async"
+    [class.no-value]="(previewBgImg$ | async) === 'none'"
+  >
+  </span>
+</button>
+
+<div class="remove-bg-container">
+  <button mat-button color="warn" (click)="resetBackground()" class="remove-bg-btn" trans>
+    Reset Background
+  </button>
+</div>

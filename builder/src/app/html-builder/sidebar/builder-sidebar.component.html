@@ -1,0 +1,120 @@
+<ng-container *ngIf="state.inspectorPanel$ | async as activePanel">
+  <nav class="inspector-nav mat-elevation-z3">
+    <a class="back-button" [matTooltip]="'Dashboard' | trans" routerLink="/dashboard">
+      <mat-icon svgIcon="keyboard-arrow-left"></mat-icon>
+    </a>
+
+    <div class="panel-nav">
+      <button
+        mat-button
+        class="panel-nav-item"
+        [class.active]="activePanel === inspectorPanel.Layout"
+        (click)="state.inspectorPanel$.next(inspectorPanel.Layout)"
+      >
+        <mat-icon svgIcon="web-design-custom"></mat-icon>
+        <span class="name" trans>Layout</span>
+      </button>
+      <button
+        mat-button
+        class="panel-nav-item"
+        [class.active]="activePanel === inspectorPanel.Elements"
+        (click)="state.inspectorPanel$.next(inspectorPanel.Elements)"
+      >
+        <mat-icon svgIcon="puzzle-custom"></mat-icon>
+        <span class="name" trans>Elements</span>
+      </button>
+      <button
+        mat-button
+        class="panel-nav-item"
+        [class.active]="activePanel === inspectorPanel.Inspector"
+        (click)="state.inspectorPanel$.next(inspectorPanel.Inspector)"
+      >
+        <mat-icon svgIcon="brush-custom"></mat-icon>
+        <span class="name" trans>Inspector</span>
+      </button>
+      <button
+        mat-button
+        class="panel-nav-item"
+        [class.active]="activePanel === inspectorPanel.Pages"
+        (click)="state.inspectorPanel$.next(inspectorPanel.Pages)"
+      >
+        <mat-icon svgIcon="documents-custom"></mat-icon>
+        <span class="name" trans>Pages</span>
+      </button>
+      <button
+        mat-button
+        class="panel-nav-item"
+        [class.active]="!!settingsModalRef"
+        (click)="openProjectSettingsModal()"
+      >
+        <mat-icon svgIcon="settings-custom"></mat-icon>
+        <span class="name" trans>Settings</span>
+      </button>
+      <button
+        mat-button
+        class="panel-nav-item"
+        (click)="toggleCodeEditor()"
+        [disabled]="!currentUser.hasPermission('editors.enable')"
+      >
+        <mat-icon svgIcon="source-code-custom"></mat-icon>
+        <span class="name" trans>Code Edtr</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="inspector-content">
+    <div class="panel-container">
+      <elements-panel [class.hidden]="activePanel !== inspectorPanel.Elements"></elements-panel>
+      <inspector-panel [class.hidden]="activePanel !== inspectorPanel.Inspector"></inspector-panel>
+      <layout-panel [class.hidden]="activePanel !== inspectorPanel.Layout"></layout-panel>
+      <pages-panel [class.hidden]="activePanel !== inspectorPanel.Pages"></pages-panel>
+    </div>
+
+    <device-switcher></device-switcher>
+
+    <div class="actions">
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="activeProject.saving"
+        color="accent"
+      ></mat-progress-bar>
+
+      <button
+        mat-button
+        [matTooltip]="'Undo' | trans"
+        [disabled]="!mutations.canUndo"
+        (click)="mutations.undo()"
+      >
+        <mat-icon svgIcon="undo"></mat-icon>
+      </button>
+      <button
+        mat-button
+        [matTooltip]="'Redo' | trans"
+        [disabled]="!mutations.canRedo"
+        (click)="mutations.redo()"
+      >
+        <mat-icon svgIcon="redo"></mat-icon>
+      </button>
+
+      <button (click)="toggleDeviceSwitcher()" mat-button [matTooltip]="'Change device' | trans">
+        <mat-icon svgIcon="phone-android"></mat-icon>
+      </button>
+      <button
+        (click)="openPreview()"
+        [disabled]="activeProject.saving"
+        mat-button
+        [matTooltip]="'Preview' | trans"
+      >
+        <mat-icon svgIcon="visibility"></mat-icon>
+      </button>
+      <button
+        (click)="saveProject()"
+        [disabled]="activeProject.saving"
+        mat-button
+        [matTooltip]="'Save project' | trans"
+      >
+        <mat-icon svgIcon="save"></mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-container>

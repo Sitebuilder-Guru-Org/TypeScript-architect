@@ -1,0 +1,89 @@
+@import "src/scss/variables";
+
+:host {
+  display: block;
+  padding: 24px;
+  background-color: mat-color($app-background, card);
+  width: 560px;
+  border-radius: 4px;
+  max-width: 90vh;
+  @include mat-elevation(4);
+}
+
+.mat-dialog-content {
+  display: flex;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0 16px;
+  margin-bottom: -24px;
+  flex-wrap: wrap;
+}
+
+.link-type-form {
+  flex: 1 1 auto;
+}
+
+.link-type-selector {
+  margin-right: 24px;
+  padding-right: 24px;
+  border-right: 1px solid mat-color($app-foreground, divider);
+}
+
+.anchor-description {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid mat-color($app-foreground, divider-lighter);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+}
+
+.link-radio {
+  display: block;
+  margin: 0 0 15px;
+  text-transform: capitalize;
+}
+
+.more-options {
+  margin-top: 15px;
+  padding-top: 20px;
+  border-top: 1px solid mat-color($app-foreground, divider-lighter);
+
+  label {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.mat-tab-body-content {
+  padding: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.page-list-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: mat-color($app-background, background);
+  }
+
+  &.selected {
+    background-color: mat-color($app-background, hover);
+  }
+}

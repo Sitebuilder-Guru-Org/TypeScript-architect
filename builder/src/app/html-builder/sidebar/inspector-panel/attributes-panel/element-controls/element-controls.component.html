@@ -1,0 +1,23 @@
+<ng-container [formGroup]="form">
+  <div class="input-container" *ngFor="let control of controls">
+    <ng-container [ngSwitch]="control.type">
+      <ng-container *ngSwitchCase="controlType.Select">
+        <label [for]="control.label">{{ control.label }}</label>
+        <select [id]="control.label" [formControlName]="control.label">
+          <option [value]="option.value" *ngFor="let option of control.options">
+            {{ option.key }}
+          </option>
+        </select>
+      </ng-container>
+      <ng-container *ngSwitchCase="controlType.Input">
+        <label [for]="control.label">{{ control.label }}</label>
+        <input
+          [type]="control.inputType"
+          min="0"
+          [id]="control.label"
+          [formControlName]="control.label"
+        />
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

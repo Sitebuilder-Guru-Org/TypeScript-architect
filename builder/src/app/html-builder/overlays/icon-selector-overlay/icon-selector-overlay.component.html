@@ -1,0 +1,38 @@
+<div class="builder-overlay-header">
+  <div class="builder-overlay-title" trans>Select an Icon</div>
+  <button
+    type="button"
+    class="builder-overlay-close-btn"
+    (click)="overlayRef.close()"
+    mat-icon-button
+  >
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+
+<div class="builder-overlay-content">
+  <div class="input-container search-container">
+    <input
+      type="search"
+      [formControl]="searchControl"
+      placeholder="Search for icons..."
+      trans-placeholder
+    />
+  </div>
+  <div class="icon-container">
+    <div class="auto-height-grid">
+      <ng-container *ngFor="let config of filteredIcons">
+        <div>
+          <div class="grid-item">
+            <div class="grid-content" matRipple (click)="selectIcon(config.icon)">
+              <div class="icon-item" [ngClass]="'fab ' + config.icon"></div>
+            </div>
+          </div>
+          <div class="grid-label">
+            {{ config.name }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

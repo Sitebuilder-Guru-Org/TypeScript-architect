@@ -1,0 +1,55 @@
+<div class="toggle-container">
+  <mat-slide-toggle [formControl]="enabled" trans>Enable Shadow</mat-slide-toggle>
+</div>
+
+<div [formGroup]="form">
+  <div class="sliders">
+    <div class="slider-container" *ngFor="let control of sliderControls">
+      <ng-container *ngIf="control !== 'spread' || type === 'box'">
+        <div class="title">{{ control }}</div>
+        <div class="inner-container">
+          <mat-slider
+            color="accent"
+            min="0"
+            [max]="control == 'angle' ? 360 : 20"
+            step="1"
+            (input)="form.get(control).setValue($event.value)"
+            [formControlName]="control"
+          ></mat-slider>
+          <div class="input-container">
+            <input
+              type="number"
+              [formControlName]="control"
+              min="1"
+              [max]="control == 'angle' ? 360 : 20"
+            />
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="many-inputs">
+    <div class="input-container">
+      <label for="shadow-panel-color" trans>Color</label>
+      <div
+        role="button"
+        mat-ripple
+        class="fake-input color-input transparent-texture"
+        [class.disabled]="form.get('color').disabled"
+        [style.background-color]="activeColor$ | async"
+        id="shadow-panel-color"
+        (click)="openColorPicker()"
+        #colorButton
+      ></div>
+    </div>
+
+    <div class="input-container text-shadow" *ngIf="type === 'box'">
+      <label for="shadow-inset" trans>Type</label>
+      <select id="shadow-inset" formControlName="inset">
+        <option [ngValue]="false" trans>Outer</option>
+        <option [ngValue]="true" trans>Inner</option>
+      </select>
+    </div>
+  </div>
+</div>

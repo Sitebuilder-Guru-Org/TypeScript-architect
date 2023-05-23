@@ -1,0 +1,13 @@
+<div class="width-container" [ngClass]="state.breakpoint">
+  <div class="highlights">
+    <context-box class="hidden" type="hover" #hoverBox></context-box>
+    <context-box class="hidden" type="selected" #selectedBox></context-box>
+  </div>
+  <iframe #iframe></iframe>
+  <div
+    class="drag-overlay"
+    [class.hidden]="!(state.dragging$ | async) && !(state.resizing$ | async)"
+    #dragOverlay
+  ></div>
+  <div class="drop-helper" [class.hidden]="!(state.dragging$ | async)" #dropHelper></div>
+</div>

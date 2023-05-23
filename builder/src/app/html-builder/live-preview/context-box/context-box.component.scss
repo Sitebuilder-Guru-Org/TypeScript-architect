@@ -1,0 +1,153 @@
+@import "variables";
+
+$action-button-height: 24px;
+$hover-box-bg-color: mat-color($app-accent, lighter);
+$hover-box-actions-color: #fff;
+
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: $hover-box-actions-color;
+  pointer-events: none;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    outline: 2px solid $hover-box-bg-color;
+  }
+
+  &.type-selected:after {
+    outline-width: 1px;
+  }
+
+  &.toolbar-bottom {
+    .context-box-toolbar {
+      top: auto;
+      bottom: -$action-button-height;
+      transform: rotate(180deg) scaleX(-1);
+    }
+  }
+
+  &.compact-mode .context-box-toolbar {
+    left: 0;
+    border-radius: 5px 5px 5px 0;
+    overflow: hidden;
+
+    .edit-button:before, .delete-button:after {
+      display: none;
+    }
+  }
+}
+
+.context-box-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -$action-button-height;
+  left: calc(50% - #{$action-button-height * 3 / 2});
+  height: 25px;
+  pointer-events: all;
+  user-select: none;
+  border-radius: 5px 5px 0 0;
+  z-index: 10;
+}
+
+.action-button {
+  width: $action-button-height;
+  height: $action-button-height;
+  background-color: $hover-box-bg-color;
+  color: $hover-box-actions-color;
+  transition: background-color 250ms ease-in-out;
+
+  &:hover {
+    background-color: mat-color($app-accent, default);
+  }
+
+  .mat-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: auto;
+  }
+
+  .drag-icon {
+    transform: rotate(90deg);
+    width: 22px;
+    height: 22px;
+  }
+
+  .settings-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.drag-button {
+  cursor: move;
+}
+
+.edit-button {
+  border-top-left-radius: 5px;
+  transition: border-right-color 250ms ease-in-out;
+
+  &:hover:before {
+    border-right-color: mat-color($app-accent, default);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    border-right: 12px solid $hover-box-bg-color;
+    border-top: 22px solid transparent;;
+    right: calc(100% - 1px);
+    height: $action-button-height - 2px;
+  }
+}
+
+.delete-button {
+  border-top-right-radius: 5px;
+  transition: border-left-color 250ms ease-in-out;
+
+  &:hover:after {
+    border-left-color: mat-color($app-accent, default);
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    border-left: 12px solid $hover-box-bg-color;
+    border-top: 22px solid transparent;
+    left: calc(100% - 1px);
+    height: $action-button-height $action-button-height - 2px;
+  }
+}
+
+.resize-button {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: -4px;
+  right: -4px;
+  pointer-events: all;
+  z-index: 10;
+  cursor: nwse-resize;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border: 1px solid $hover-box-bg-color;
+  }
+}

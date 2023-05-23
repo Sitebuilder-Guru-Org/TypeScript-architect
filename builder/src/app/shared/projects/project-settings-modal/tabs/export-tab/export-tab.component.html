@@ -1,0 +1,116 @@
+<div class="tab-content">
+  <div class="input-container">
+    <label for="export-type" trans>How do you want to export the project?</label>
+    <select id="export-type" [formControl]="exportType">
+      <option value="download" trans>Download a zip file</option>
+      <option value="ftp" trans>Export to my own FTP server</option>
+    </select>
+  </div>
+
+  <div class="download-container" *ngIf="exportType.value === 'download'">
+    <div class="info-banner">
+      <svg-image class="icon" name="download.svg"></svg-image>
+      <div class="banner-content">
+        <div class="banner-title" trans>Your project is ready to download.</div>
+        <button
+          (click)="downloadProject()"
+          [disabled]="!currentUser.hasPermission('projects.download')"
+          type="button"
+          color="accent"
+          mat-stroked-button
+          trans
+        >
+          Download
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <form
+    (ngSubmit)="exportToFTP()"
+    [formGroup]="projectSettings.form"
+    ngNativeValidate
+    class="ftp-container many-inputs"
+    *ngIf="exportType.value === 'ftp'"
+  >
+    <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="publishing$ | async"
+      color="accent"
+    ></mat-progress-bar>
+    <ng-container
+      *ngIf="settings.get('publish.allow_credential_change')"
+      formGroupName="ftpCredentials"
+    >
+      <div class="input-container">
+        <label for="ftp-export-host" trans>Host</label>
+        <input type="text" id="ftp-export-host" formControlName="host" required />
+        <p class="error" *ngIf="errors.host">{{ errors.host }}</p>
+      </div>
+
+      <div class="input-container">
+        <label for="ftp-export-username" trans>Username</label>
+        <input type="text" id="ftp-export-username" formControlName="username" required />
+        <p class="error" *ngIf="errors.username">{{ errors.username }}</p>
+      </div>
+
+      <div class="input-container">
+        <label for="ftp-export-password" trans>Password</label>
+        <input type="password" id="ftp-export-password" formControlName="password" required />
+        <p class="error" *ngIf="errors.password">{{ errors.password }}</p>
+      </div>
+
+      <div class="input-container">
+        <label for="ftp-export-dir" trans>Directory</label>
+        <input
+          type="text"
+          id="ftp-export-dir"
+          formControlName="directory"
+          placeholder="(Optional)"
+          trans-placeholder
+        />
+        <p trans>
+          In which directory on your FTP server should this project files be stored. Leave empty to
+          store at root.
+        </p>
+        <p class="error" *ngIf="errors.directory">{{ errors.directory }}</p>
+      </div>
+
+      <div class="inline-inputs-container">
+        <div class="input-container">
+          <label for="ftp-export-port" trans>Port</label>
+          <input type="number" id="ftp-export-port" formControlName="port" required />
+          <p class="error" *ngIf="errors.port">{{ errors.port }}</p>
+        </div>
+
+        <div class="input-container">
+          <label for="ftp-export-ssl" trans>Security</label>
+          <select id="ftp-export-ssl" formControlName="ssl">
+            <option [value]="false" trans>Default</option>
+            <option [value]="true" trans>SSL</option>
+          </select>
+        </div>
+      </div>
+    </ng-container>
+    <button type="submit" class="hidden"></button>
+  </form>
+</div>
+
+<div class="settings-modal-actions" *ngIf="exportType.value === 'ftp'">
+  <mat-slide-toggle
+    color="accent"
+    *ngIf="settings.get('publish.allow_credential_change')"
+    [formControl]="projectSettings.form.get('ftpCredentials.remember')"
+    >Remember credentials</mat-slide-toggle
+  >
+  <button
+    type="button"
+    (click)="exportToFTP()"
+    mat-raised-button
+    color="accent"
+    [disabled]="publishing$ | async"
+    trans
+  >
+    Export
+  </button>
+</div>

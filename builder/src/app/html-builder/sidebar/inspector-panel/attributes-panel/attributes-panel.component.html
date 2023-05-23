@@ -1,0 +1,48 @@
+<div class="visibility-controls">
+  <button
+    mat-icon-button
+    (click)="changeVisibility('sm')"
+    [class.active]="!visibility.sm"
+    [matTooltip]="(!visibility.sm ? 'Show on mobile' : 'Hide on mobile') | trans"
+  >
+    <mat-icon svgIcon="phone-android"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="changeVisibility('md')"
+    [class.active]="!visibility.md"
+    [matTooltip]="(!visibility.md ? 'Show on tablet' : 'Hide on tablet') | trans"
+  >
+    <mat-icon svgIcon="tablet-android"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="changeVisibility('lg')"
+    [class.active]="!visibility.lg"
+    [matTooltip]="(!visibility.lg ? 'Show on laptop' : 'Hide on laptop') | trans"
+  >
+    <mat-icon svgIcon="laptop-chromebook"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="changeVisibility('xl')"
+    [class.active]="!visibility.xl"
+    [matTooltip]="(!visibility.xl ? 'Show on desktop' : 'Hide on desktop') | trans"
+  >
+    <mat-icon svgIcon="desktop-windows"></mat-icon>
+  </button>
+</div>
+
+<div class="inputs">
+  <element-controls></element-controls>
+
+  <div class="input-container">
+    <label for="id" trans>Css ID</label>
+    <input type="text" name="id" id="id" [(ngModel)]="id" (ngModelChange)="changeElId($event)" />
+  </div>
+
+  <div class="input-container">
+    <label for="css-class" trans>Css Class</label>
+    <chip-input id="css-class" [formControl]="classControl"></chip-input>
+  </div>
+</div>

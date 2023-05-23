@@ -1,0 +1,189 @@
+<ng-container *ngIf="currentState | async as currentState">
+  <div class="toolbar-row first-row">
+   <div class="controls-group">
+     <div class="input-container font-family toolbar-btn" [matTooltip]="'Font family'">
+       <div class="fake-input" (click)="openFontPicker()">
+         {{ currentState.fontName | fontDisplayName }}
+       </div>
+       <mat-icon svgIcon="keyboard-arrow-down"></mat-icon>
+     </div>
+   </div>
+
+    <div class="controls-group">
+      <div class="input-container font-size toolbar-btn" [matTooltip]="'Font size'">
+        <input
+          type="number"
+          min="1"
+          max="99"
+          [value]="currentState.fontSize"
+          (change)="execCommand('fontSize', $event.target.value)"
+          id="inline-font-size"
+        />
+      </div>
+    </div>
+
+    <div class="controls-group no-border-right">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        [matTooltip]="'Bold' | trans"
+        (click)="execCommand('bold')"
+        [class.active]="currentState.bold"
+      >
+        <mat-icon svgIcon="format-bold"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        [matTooltip]="'Italic' | trans"
+        (click)="execCommand('italic')"
+        [class.active]="currentState.italic"
+      >
+        <mat-icon svgIcon="format-italic"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        [matTooltip]="'Underline' | trans"
+        (click)="execCommand('underline')"
+        [class.active]="currentState.underline"
+      >
+        <mat-icon svgIcon="format-underlined"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        [matTooltip]="'Strikethrough' | trans"
+        (click)="execCommand('strikethrough')"
+        [class.active]="currentState.strikethrough"
+      >
+        <mat-icon svgIcon="format-strikethrough"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        #foreColorBtn
+        (click)="openColorPicker('foreColor', foreColorBtn)"
+        [matTooltip]="'Color' | trans"
+        [matTooltipShowDelay]="300"
+      >
+        <mat-icon svgIcon="format-color-text"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        #bgColorBtn
+        (click)="openColorPicker('hiliteColor', bgColorBtn)"
+        [matTooltip]="'Highlight' | trans"
+        [matTooltipShowDelay]="300"
+      >
+        <mat-icon svgIcon="format-color-fill"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="toolbar-row">
+    <div class="controls-group">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="openLinkEditor()"
+        [class.active]="currentState.link"
+        [matTooltip]="'Add Link' | trans"
+        [disabled]="!shouldEnableLinkBtn()"
+      >
+        <mat-icon svgIcon="link"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        #iconBtn
+        class="toolbar-btn"
+        [matTooltip]="'Add Icon' | trans"
+        (click)="openIconPicker()"
+      >
+        <mat-icon svgIcon="insert-emoticon"></mat-icon>
+      </button>
+    </div>
+
+    <div class="controls-group text-align">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('JustifyLeft')"
+        [class.active]="currentState.textAlign === 'left'"
+        [matTooltip]="'Align left' | trans"
+      >
+        <mat-icon svgIcon="format-align-left"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('justifyCenter')"
+        [class.active]="currentState.textAlign === 'center'"
+        [matTooltip]="'Align center' | trans"
+      >
+        <mat-icon svgIcon="format-align-center"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('justifyRight')"
+        [class.active]="currentState.textAlign === 'right'"
+        [matTooltip]="'Align right' | trans"
+      >
+        <mat-icon svgIcon="format-align-right"></mat-icon>
+      </button>
+    </div>
+
+    <div class="controls-group">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('Outdent')"
+        [matTooltip]="'Decrease Indent' | trans"
+      >
+        <mat-icon svgIcon="format-indent-decrease"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('Indent')"
+        [matTooltip]="'Increase Indent' | trans"
+      >
+        <mat-icon svgIcon="format-indent-increase"></mat-icon>
+      </button>
+    </div>
+
+    <div class="controls-group">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('insertUnorderedList')"
+        [matTooltip]="'Bulleted list' | trans"
+        [matTooltipShowDelay]="300"
+      >
+        <mat-icon svgIcon="format-list-bulleted"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('insertOrderedList')"
+        [matTooltip]="'Numbered list' | trans"
+        [matTooltipShowDelay]="300"
+      >
+        <mat-icon svgIcon="format-list-numbered"></mat-icon>
+      </button>
+    </div>
+
+    <div class="controls-group no-border-right">
+      <button
+        mat-icon-button
+        class="toolbar-btn"
+        (click)="execCommand('removeFormat')"
+        [matTooltip]="'Remove format' | trans"
+      >
+        <mat-icon svgIcon="format-clear"></mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-container>

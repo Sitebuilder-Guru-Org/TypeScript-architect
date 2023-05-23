@@ -1,0 +1,119 @@
+<div class="modal-header">
+  <h2 class="modal-title" mat-dialog-title trans>What do you want to link to?</h2>
+  <button type="button" (click)="close()" class="close-button no-style" tabindex="-1">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="form" ngNativeValidate>
+  <div class="mat-dialog-content">
+    <div class="link-type-selector">
+      <mat-radio-group [value]="selectedType$ | async" (change)="selectedType$.next($event.value)">
+        <mat-radio-button class="link-radio" *ngFor="let linkType of linkTypes" [value]="linkType">
+          {{ linkType }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="link-type-form" [ngSwitch]="selectedType$ | async">
+      <ng-container *ngSwitchCase="'none'">
+        <no-results-message svgIcon="link-off">
+          <span primary-text trans>No Link</span>
+          <span secondary-text trans>Choose from the list of options to add a link.</span>
+        </no-results-message>
+      </ng-container>
+      <ng-container *ngSwitchCase="'url'">
+        <div class="input-container">
+          <label for="link-editor-url" trans>What's the web address (URL)?</label>
+          <input
+            type="url"
+            id="link-editor-url"
+            formControlName="href"
+            placeholder="Paste it here..."
+            trans-placeholder
+            required
+          />
+        </div>
+        <ng-container *ngTemplateOutlet="linkTargetOptions"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'page'">
+        <div class="input-container">
+          <label for="link-editor-page" trans>Which page?</label>
+          <select id="link-editor-page" formControlName="href">
+            <option [value]="page.name" *ngFor="let page of state.pages$ | async">
+              {{ page.name }}
+            </option>
+          </select>
+        </div>
+        <ng-container *ngTemplateOutlet="linkTargetOptions"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'anchor'">
+        <div class="anchor-description">
+          <h3 trans>Link to an anchor</h3>
+          <p trans>Visitors that click this element will go directly to the anchor on the page.</p>
+        </div>
+        <div class="input-container">
+          <label for="link-editor-anchor" trans>Which anchor on this page?</label>
+          <select id="link-editor-anchor" formControlName="href">
+            <option [value]="anchor" *ngFor="let anchor of anchors$ | async">{{ anchor }}</option>
+          </select>
+        </div>
+      </ng-container>
+      <div class="many-inputs" *ngSwitchCase="'download'">
+        <div class="input-container">
+          <label for="link-editor-download-name" trans>Download file name</label>
+          <input type="text" id="link-editor-download-name" formControlName="download" required />
+        </div>
+        <div class="input-container">
+          <label for="link-editor-download" trans>Download url</label>
+          <input
+            type="url"
+            name="link-editor-download"
+            id="link-editor-download"
+            formControlName="href"
+            required
+          />
+        </div>
+      </div>
+      <div class="many-inputs" *ngSwitchCase="'email'">
+        <div class="input-container">
+          <label for="link-editor-email" trans>What's the email address?</label>
+          <input
+            type="email"
+            id="link-editor-email"
+            placeholder="Add it here..."
+            trans-placeholder
+            formControlName="href"
+            required
+          />
+        </div>
+        <div class="input-container">
+          <label for="link-editor-subject" trans>What's the email subject?</label>
+          <input
+            type="text"
+            id="link-editor-subject"
+            placeholder="Add a subject here.."
+            trans-placeholder
+            formControlName="subject"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #linkTargetOptions>
+    <div class="more-options">
+      <label for="link-editor-target" trans>How should it open?</label>
+      <mat-radio-group id="link-editor-target" formControlName="target">
+        <mat-radio-button class="link-radio" value="_blank" trans>New Window</mat-radio-button>
+        <mat-radio-button class="link-radio" value="" trans>Same Window</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </ng-template>
+
+  <mat-dialog-actions>
+    <button (click)="close()" type="button" mat-button trans>Cancel</button>
+    <button type="submit" mat-raised-button color="accent" trans>Done</button>
+  </mat-dialog-actions>
+</form>

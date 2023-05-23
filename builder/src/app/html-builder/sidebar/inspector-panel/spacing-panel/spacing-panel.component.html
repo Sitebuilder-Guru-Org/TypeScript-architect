@@ -1,0 +1,77 @@
+<div class="side-controls">
+  <button class="no-style side-control all-control" (click)="toggleSide('all')">
+    <side-control-border type="all" [active]="sideEnabled('all')"></side-control-border>
+  </button>
+
+  <button class="no-style side-control top-control" (click)="toggleSide('top')">
+    <side-control-border
+      [type]="typeIsBorderRadius ? 'top-left' : 'top'"
+      [active]="sideEnabled('top')"
+    ></side-control-border>
+  </button>
+  <button class="no-style side-control right-control" (click)="toggleSide('right')">
+    <side-control-border
+      [type]="typeIsBorderRadius ? 'bottom-left' : 'right'"
+      [active]="sideEnabled('right')"
+    ></side-control-border>
+  </button>
+  <button class="no-style side-control bottom-control" (click)="toggleSide('bottom')">
+    <side-control-border
+      [type]="typeIsBorderRadius ? 'top-right' : 'bottom'"
+      [active]="sideEnabled('bottom')"
+    ></side-control-border>
+  </button>
+  <button class="no-style side-control left-control" (click)="toggleSide('left')">
+    <side-control-border
+      [type]="typeIsBorderRadius ? 'bottom-right' : 'left'"
+      [active]="sideEnabled('left')"
+    ></side-control-border>
+  </button>
+</div>
+
+<mat-slider
+  min="1"
+  [max]="sliderMax"
+  step="1"
+  color="accent"
+  [value]="sliderValue"
+  (input)="onSliderInput($event)"
+  [disabled]="!enabledSides.length"
+></mat-slider>
+
+<ng-content></ng-content>
+
+<form
+  (ngSubmit)="onFormSubmit()"
+  class="side-inputs"
+  [class.border-radius]="typeIsBorderRadius"
+  [formGroup]="sidesForm"
+>
+  <div class="input-container top-input">
+    <input formControlName="top" />
+    <div class="measure-unit">{{ unit }}</div>
+  </div>
+  <div class="input-container left-input">
+    <input formControlName="left" />
+    <div class="measure-unit">{{ unit }}</div>
+  </div>
+  <button
+    mat-icon-button
+    class="connect-button"
+    [class.active]="cornersConnected$ | async"
+    type="button"
+    [matTooltip]="((cornersConnected$ | async) ? 'Set values separately' : 'Link values together') | trans"
+    (click)="toggleCornersConnected()"
+  >
+    <mat-icon [svgIcon]="(cornersConnected$ | async) ? 'link' : 'link-off'"></mat-icon>
+  </button>
+  <div class="input-container right-input">
+    <input formControlName="right" />
+    <div class="measure-unit">{{ unit }}</div>
+  </div>
+  <div class="input-container bottom-input">
+    <input formControlName="bottom" />
+    <div class="measure-unit">{{ unit }}</div>
+  </div>
+  <button type="submit" class="hidden"></button>
+</form>

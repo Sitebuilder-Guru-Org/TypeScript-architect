@@ -1,0 +1,69 @@
+@import 'src/scss/variables';
+
+:host {
+  display: block;
+  background-color: mat-color($app-background, card);
+  @include mat-elevation(4);
+  width: 465px;
+  max-width: 90vh;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+}
+
+.first-row {
+  border-bottom: 1px solid mat-color($app-foreground, divider);
+}
+
+.toolbar-btn {
+  margin: 2px;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+
+  input,
+  select,
+  .fake-input {
+    height: 40px;
+    border: none;
+  }
+}
+
+.active {
+  color: mat-color($app-accent, default);
+}
+
+.font-size {
+  width: 60px;
+}
+
+.font-family {
+  width: 125px;
+  position: relative;
+  cursor: pointer;
+
+  .fake-input {
+    padding-right: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mat-icon {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+  }
+}
+
+.no-border-right {
+  border-right: none;
+}

@@ -1,0 +1,44 @@
+@import 'variables';
+
+background-panel {
+  display: block;
+
+  .img-btn {
+    display: block;
+    height: 57px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: 400;
+
+    .mat-button-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .img-btn-title {
+      margin-right: 5px;
+    }
+
+    .img-btn-preview {
+      display: block;
+      margin-left: auto;
+      width: 25px;
+      height: 25px;
+      border-radius: 4px;
+      border: 1px solid mat-color($app-foreground, divider);
+    }
+
+    .transparent-svg {
+      display: none;
+    }
+
+    .no-value .transparent-svg {
+      display: block;
+    }
+  }
+
+  .remove-bg-container {
+    text-align: right;
+    margin-top: 15px;
+  }
+}

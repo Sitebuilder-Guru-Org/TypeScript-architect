@@ -1,0 +1,107 @@
+<form [formGroup]="form" (ngSubmit)="executeMutation()" ngNativeValidate>
+  <div class="many-inputs">
+    <div class="input-container font-family">
+      <label for="typography-font-family" trans>Font</label>
+      <div class="fake-input" id="typography-font-family" tabindex="0" (click)="openFontPicker()">
+        {{ currentValue('fontFamily') | fontDisplayName }}
+      </div>
+      <mat-icon svgIcon="keyboard-arrow-down"></mat-icon>
+    </div>
+    <div class="input-container font-size">
+      <label for="typography-font-size" trans>Font Size (px)</label>
+      <input type="number" (blur)="onFontSizeBlur($event)" min="1" max="99" formControlName="fontSize" id="typography-font-size" />
+    </div>
+    <div class="input-container font-weight">
+      <label for="typography-font-weight" trans>Font Weight</label>
+      <select formControlName="fontWeight" id="typography-font-weight">
+        <option [value]="weight" *ngFor="let weight of fontWeights">{{ weight }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="align-center decoration-row">
+    <button
+      type="button"
+      mat-icon-button
+      [matTooltip]="'Italic' | trans"
+      (click)="toggleTextStyle('fontStyle', 'italic')"
+      [class.active]="currentValue('fontStyle') === 'italic'"
+    >
+      <mat-icon svgIcon="format-italic"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      [matTooltip]="'Underline' | trans"
+      (click)="toggleTextStyle('textDecorationLine', 'underline')"
+      [class.active]="currentValue('textDecorationLine') === 'underline'"
+    >
+      <mat-icon svgIcon="format-underlined"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      class="push-right"
+      [matTooltip]="'Line Through' | trans"
+      (click)="toggleTextStyle('textDecorationLine', 'line-through')"
+      [class.active]="currentValue('textDecorationLine') === 'line-through'"
+    >
+      <mat-icon svgIcon="format-strikethrough"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="openColorPicker('color')"
+      [matTooltip]="'Color' | trans"
+    >
+      <mat-icon svgIcon="format-color-text"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="openColorPicker('backgroundColor')"
+      [matTooltip]="'Background Color' | trans"
+    >
+      <mat-icon svgIcon="format-color-fill"></mat-icon>
+    </button>
+  </div>
+
+  <div class="align-center">
+    <button
+      type="button"
+      mat-icon-button
+      (click)="toggleTextStyle('textAlign', 'left')"
+      [class.active]="currentValue('textAlign') === 'left'"
+      [matTooltip]="'Align left' | trans"
+    >
+      <mat-icon svgIcon="format-align-left"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="toggleTextStyle('textAlign', 'center')"
+      [class.active]="currentValue('textAlign') === 'center'"
+      [matTooltip]="'Align center' | trans"
+    >
+      <mat-icon svgIcon="format-align-center"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="toggleTextStyle('textAlign', 'right')"
+      [class.active]="currentValue('textAlign') === 'right'"
+      [matTooltip]="'Align right' | trans"
+    >
+      <mat-icon svgIcon="format-align-right"></mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="toggleTextStyle('textAlign', 'justify')"
+      [class.active]="currentValue('textAlign') === 'justify'"
+      [matTooltip]="'Align justify' | trans"
+    >
+      <mat-icon svgIcon="format-align-justify"></mat-icon>
+    </button>
+  </div>
+</form>

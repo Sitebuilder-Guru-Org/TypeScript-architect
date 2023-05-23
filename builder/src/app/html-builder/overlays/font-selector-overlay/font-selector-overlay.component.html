@@ -1,0 +1,7 @@
+<div class="builder-overlay-header">
+  <div class="builder-overlay-title" trans>Select a Font</div>
+  <button type="button" class="builder-overlay-close-btn" (click)="overlayRef.close()" mat-icon-button>
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+<google-font-selector class="builder-overlay-content" [formControl]="formControl"></google-font-selector>

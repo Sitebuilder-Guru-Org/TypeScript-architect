@@ -1,0 +1,20 @@
+<builder-sidebar [@bodyExpansion]="!inspectorHidden"></builder-sidebar>
+
+<live-preview></live-preview>
+
+<drag-visual-helper #dragHelper></drag-visual-helper>
+
+<button
+  type="button"
+  mat-mini-fab
+  color="accent"
+  class="mobile-toggle-button"
+  (click)="toggleInspector()"
+>
+  <mat-icon svgIcon="menu"></mat-icon>
+</button>
+
+<main-loader
+  [visible]="state.loading$ | async"
+  [class.partial]="state.loadedAtLeastOnce$ | async"
+></main-loader>

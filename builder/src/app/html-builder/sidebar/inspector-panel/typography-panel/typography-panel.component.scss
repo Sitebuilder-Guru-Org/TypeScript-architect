@@ -1,0 +1,37 @@
+@import "variables";
+
+:host {
+  display: block;
+}
+
+.active {
+  color: mat-color($app-accent, default);
+}
+
+.font-family {
+  position: relative;
+  cursor: pointer;
+
+  .fake-input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mat-icon {
+    position: absolute;
+    top: 38px;
+    right: 7px;
+  }
+}
+
+.decoration-row {
+  display: flex;
+  border-bottom: 1px solid mat-color($app-foreground, divider-lighter);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.push-right {
+  margin-right: auto;
+}

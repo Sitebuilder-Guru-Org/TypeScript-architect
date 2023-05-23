@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title *ngIf="data.template" trans>Update Template Details</h2>
+    <h2 class="modal-title" mat-dialog-title *ngIf="!data.template" trans>Create a New Template</h2>
+    <button type="button" (click)="close()" class="close-button no-style icon-button"><mat-icon svgIcon="close"></mat-icon></button>
+</div>
+
+<form autocomplete="off" (ngSubmit)="confirm()" [formGroup]="form" ngNativeValidate>
+    <div class="many-inputs mat-dialog-content" mat-dialog-content>
+        <div class="input-container">
+            <label for="name" trans>Name</label>
+            <input type="text" id="name" name="name" formControlName="name" required>
+            <div class="error" *ngIf="errors.name">{{errors.name}}</div>
+        </div>
+
+        <div class="input-container">
+            <label for="category" trans>Category</label>
+            <select id="category" name="category" formControlName="category" required>
+                <option [ngValue]="category" *ngFor="let category of allCategories">{{category}}</option>
+            </select>
+            <div class="error" *ngIf="errors.category">{{errors.category}}</div>
+        </div>
+
+        <div class="input-container">
+            <label for="template-file" trans>Template Zip</label>
+            <input type="file" name="template-file" id="template-file" #templateInput (change)="setFile('template', templateInput.files)" [required]="!data.template" accept="application/zip">
+            <p trans>Zip of template files. Must contain index.html file which will be used as default page.</p>
+            <p trans>(Optional) CSS and JS that should appear in builder code editors should be in "css/code_editor_styles.css" and "js/code_editor_scripts.js" files.</p>
+            <div class="error" *ngIf="errors.template">{{errors.template}}</div>
+        </div>
+
+        <div class="input-container">
+            <label for="thumbnail" trans>Thumbnail</label>
+            <input type="file" name="thumbnail" id="thumbnail" #thumbInput (change)="setFile('thumbnail', thumbInput.files)" accept="image/*">
+            <div class="error" *ngIf="errors.thumbnail">{{errors.thumbnail}}</div>
+        </div>
+
+        <div class="setting-toggle-container">
+            <mat-slide-toggle formControlName="includeBootstrap" trans>Include Bootstrap</mat-slide-toggle>
+            <p trans>Deselect if template .zip already includes bootstrap files, otherwise styles will be duplicated which might cause issues.</p>
+            <div class="error" *ngIf="errors.includeBootstrap">{{errors.includeBootstrap}}</div>
+        </div>
+    </div>
+
+    <div class="buttons right mat-dialog-actions" mat-dialog-actions>
+        <button (click)="close()" type="button" mat-button class="button cancel" trans>Cancel</button>
+        <button type="submit" class="button primary" mat-raised-button color="accent" [disabled]="loading$ | async">
+            <span *ngIf="data.template" trans>Update Template</span>
+            <span *ngIf="!data.template" trans>Upload Template</span>
+        </button>
+    </div>
+</form>

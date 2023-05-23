@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h2 mat-dialog-title trans>Project Settings</h2>
+  <button type="button" (click)="close()" class="close-button no-style">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</div>
+
+<mat-tab-group color="accent" animationDuration="0">
+  <mat-tab [label]="'Site URL' | trans">
+    <site-url-tab></site-url-tab>
+  </mat-tab>
+  <mat-tab [label]="'Forms' | trans">
+    <form
+      [formGroup]="projectSettings.form"
+      (ngSubmit)="projectSettings.submitForm()"
+      ngNativeValidate
+    >
+      <div class="tab-content" [formGroup]="projectSettings.form">
+        <p [transValues]="{siteName: settings.get('branding.site_name')}" trans>
+          When a form is submitted on your published website, :siteName will collect the submission
+          and send it to this email address.
+        </p>
+        <div class="input-container">
+          <label for="project-settings-email" trans>Send form submissions to:</label>
+          <input type="email" id="project-settings-email" formControlName="formsEmail" required />
+        </div>
+      </div>
+      <div class="settings-modal-actions">
+        <button
+          type="submit"
+          mat-raised-button
+          color="accent"
+          [disabled]="projectSettings.loading$ | async"
+          trans
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab [label]="'Export' | trans">
+    <export-tab></export-tab>
+  </mat-tab>
+  <mat-tab [label]="'Builder' | trans">
+    <builder-settings-tab></builder-settings-tab>
+  </mat-tab>
+</mat-tab-group>

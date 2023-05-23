@@ -1,0 +1,136 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.side-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.side-control {
+  width: 25px;
+  height: 25px;
+  border: 1px solid mat-color($app-foreground, divider);
+  background-color: mat-color($app-background, raised-button);
+  margin-right: 5px;
+  position: relative;
+
+  &.all-control {
+    border-color: mat-color($app-foreground, divider);
+    margin-right: auto;
+
+    &.active {
+      border-color: mat-color($app-foreground, divider-lighter);
+    }
+  }
+
+  &.top-control {
+    border-top-color: mat-color($app-foreground, divider);
+
+    &.active {
+      border-top-color: mat-color($app-foreground, divider-lighter);
+    }
+  }
+
+  &.right-control {
+    border-right-color: mat-color($app-foreground, divider);
+
+    &.active {
+      border-right-color: mat-color($app-foreground, divider-lighter);
+    }
+  }
+
+  &.bottom-control {
+    border-bottom-color: mat-color($app-foreground, divider);
+
+    &.active {
+      border-bottom-color: mat-color($app-foreground, divider-lighter);
+    }
+  }
+
+  &.left-control {
+    border-left-color: mat-color($app-foreground, divider);
+
+    &.active {
+      border-left-color: mat-color($app-foreground, divider-lighter);
+    }
+  }
+}
+
+.side-inputs .input-container {
+  max-width: 60px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.side-inputs input {
+  border: 1px solid mat-color($app-foreground, divider);
+  background-color: mat-color($app-background, card);
+  margin: 0;
+  padding-right: 23px;
+}
+
+.top-input {
+  grid-area: top;
+}
+
+.bottom-input {
+  grid-area: bottom;
+}
+
+.left-input {
+  grid-area: middle1;
+}
+
+.connect-button {
+  display: block;
+  margin: auto;
+  grid-area: middle2;
+
+  &.active {
+    color: mat-color($app-accent, default);
+  }
+}
+
+.right-input {
+  grid-area: middle3;
+}
+
+.side-inputs {
+  display: grid;
+  grid-row-gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    'top top top'
+    'middle1 middle2 middle3'
+    'bottom bottom bottom';
+}
+
+.border-radius {
+  justify-content: center;
+  grid-template-columns: 1fr 10px 1fr;
+  grid-template-areas:
+    'top . middle1'
+    'middle2 middle2 middle2'
+    'middle3 . bottom';
+
+  .input-container {
+    max-width: 80px;
+  }
+}
+
+.measure-unit {
+  position: absolute;
+  top: 13px;
+  right: 9px;
+  z-index: 4;
+  color: mat-color($app-accent, default);
+  font-size: 1.2rem;
+}
+
+.mat-slider {
+  width: 100%;
+}

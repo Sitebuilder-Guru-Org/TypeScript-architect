@@ -1,0 +1,21 @@
+<ng-container *ngIf="showActions$ | async">
+  <div class="context-box-toolbar">
+    <button class="no-style action-button edit-button" (click)="editNode()" title="Edit Element">
+      <mat-icon svgIcon="settings" class="settings-icon"></mat-icon>
+    </button>
+    <button
+      type="button"
+      class="no-style action-button drag-button builder-drag-handle"
+      previewDragAndDrop
+      [contextType]="type"
+      title="Drag Element"
+    >
+      <mat-icon svgIcon="drag-indicator" class="drag-icon"></mat-icon>
+    </button>
+    <button class="no-style action-button delete-button" (click)="deleteNode()" title="Move Delete">
+      <mat-icon svgIcon="close" class="delete-icon"></mat-icon>
+    </button>
+  </div>
+
+  <button class="no-style resize-button" elementResizer [contextType]="type"></button>
+</ng-container>

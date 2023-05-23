@@ -1,0 +1,48 @@
+<form
+  (ngSubmit)="projectSettings.submitForm()"
+  [formGroup]="projectSettings.form"
+  ngNativeValidate
+  class="many-inputs"
+>
+  <div class="tab-content">
+    <ng-container formGroupName="builder">
+      <div class="setting-toggle-container">
+        <mat-slide-toggle color="accent" formControlName="autoSave" trans
+          >Auto save</mat-slide-toggle
+        >
+        <p trans>Toggle auto saving of project when changes are made in the builder.</p>
+      </div>
+
+      <div class="setting-toggle-container">
+        <mat-slide-toggle color="accent" formControlName="hoverContextActions" trans
+          >Hover outline context actions</mat-slide-toggle
+        >
+        <p trans>
+          Toggle visibility of context actions for outline that appears when hovering over elements
+          in the builder.
+        </p>
+      </div>
+
+      <div class="setting-toggle-container">
+        <mat-slide-toggle color="accent" formControlName="selectedContextActions" trans
+          >Selected outline context action</mat-slide-toggle
+        >
+        <p trans>
+          Toggle visibility of context actions for outline that appears around selected element in
+          the builder.
+        </p>
+      </div>
+    </ng-container>
+  </div>
+  <div class="settings-modal-actions">
+    <button
+      type="submit"
+      mat-raised-button
+      color="accent"
+      [disabled]="projectSettings.loading$ | async"
+      trans
+    >
+      Save
+    </button>
+  </div>
+</form>

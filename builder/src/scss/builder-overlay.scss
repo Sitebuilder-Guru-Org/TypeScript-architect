@@ -1,0 +1,32 @@
+@import "variables";
+
+.builder-overlay {
+  display: block;
+  background-color: mat-color($app-background, card);
+  border-radius: 4px;
+  @include mat-elevation(5);
+  max-height: 95vh;
+  max-width: 95vh;
+  overflow: auto;
+
+  .builder-overlay-header {
+    position: relative;
+    padding: 14px;
+    text-align: center;
+    background-color: mat-color($app-background, background);
+    border-top: 1px solid mat-color($app-foreground, divider-lighter);
+    border-bottom: 1px solid mat-color($app-foreground, divider-lighter);
+    font-weight: 500;
+  }
+
+  .builder-overlay-close-btn {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+  }
+
+  .builder-overlay-content {
+    display: block;
+    padding: 20px;
+  }
+}

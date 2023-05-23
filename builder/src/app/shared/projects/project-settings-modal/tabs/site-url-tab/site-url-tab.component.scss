@@ -1,0 +1,32 @@
+@import "variables";
+
+:host {
+  display: block;
+}
+
+.no-custom-domain-msg {
+  margin: 20px 0;
+
+  ::ng-deep svg-image {
+    display: none;
+  }
+
+  ::ng-deep .main {
+    margin-bottom: 15px;
+  }
+}
+
+.project-url-container {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+
+  .mat-icon {
+    flex-shrink: 0;
+    margin-right: 5px;
+  }
+
+  .project-url:hover {
+    text-decoration: underline;
+  }
+}

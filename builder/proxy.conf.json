@@ -1,0 +1,27 @@
+{
+    "/secure": {
+        "target": "http://architect.test",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/storage": {
+        "target": "http://architect.test",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/client": {
+        "target": "http://architect.test",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/builder": {
+        "target": "http://architect.test",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/__clockwork": {
+        "target": "http://architect.test",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

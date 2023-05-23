@@ -1,0 +1,101 @@
+<div class="datatable-page-header">
+  <h1 trans>Projects</h1>
+
+  <div class="header">
+    <datatable-filters pluralName="projects" [filters]="filters"></datatable-filters>
+    <div class="action-buttons">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="showCrupdateProjectModal()"
+        *ngIf="currentUser.hasPermission('projects.create')"
+        class="button-with-icon"
+      >
+        <mat-icon svgIcon="add"></mat-icon>
+        <span trans>Create New Project</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="datatable responsive-table">
+  <mat-progress-bar
+    class="loading-bar"
+    mode="indeterminate"
+    color="accent"
+    *ngIf="datatable.paginator && datatable.paginator.loading$ | async"
+  ></mat-progress-bar>
+  <table class="material-table">
+    <thead>
+      <tr>
+        <th table-header-checkbox></th>
+        <th table-sort-header="name" trans>Project</th>
+        <th trans>Owner</th>
+        <th table-sort-header trans>Published</th>
+        <th table-sort-header trans>Template</th>
+        <th table-sort-header="updated_at" trans>Last Updated</th>
+        <th></th>
+      </tr>
+      <tr *ngIf="datatable.selectedRows$.value.length as selectedCount">
+        <th colspan="7">
+          <div
+            class="bulk-actions-title"
+            [transValues]="{count: selectedCount, resource: 'project(s)'}"
+            trans
+          >
+            :count :resource selected:
+          </div>
+          <div class="bulk-actions">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="maybeDeleteSelectedProjects()"
+              *ngIf="currentUser.hasPermission('projects.delete')"
+              trans
+            >
+              Delete
+            </button>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projects$ | async">
+        <td [table-body-checkbox]="project.id"></td>
+        <td>
+          <div class="column-with-image">
+            <img [src]="getProjectThumbnail(project)" alt="" />
+            <span> {{ project.name }} </span>
+          </div>
+        </td>
+        <td data-label="Owner">
+          <user-column [user]="project.users[0]"></user-column>
+        </td>
+        <td data-label="Published">{{ project.published ? 'Yes' : 'No' }}</td>
+        <td data-label="Template">{{ project.template }}</td>
+        <td>{{ project.updated_at | formattedDate }}</td>
+        <td class="edit-column">
+          <a
+            mat-icon-button
+            target="_blank"
+            [routerLink]="['/design', project.id]"
+            [matTooltip]="'Edit project' | trans"
+            ><mat-icon svgIcon="edit"></mat-icon
+          ></a>
+          <button
+            mat-icon-button
+            (click)="showCrupdateProjectModal(project)"
+            *ngIf="currentUser.hasPermission('projects.update')"
+            [matTooltip]="'Update details' | trans"
+          >
+            <mat-icon svgIcon="settings"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <no-results-message svgImage="website-builder.svg" *ngIf="datatable.paginator.noResults$ | async">
+    <span primary-text>No projects have been created yet</span>
+  </no-results-message>
+  <datatable-footer></datatable-footer>
+</div>

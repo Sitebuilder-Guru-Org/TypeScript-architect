@@ -1,0 +1,7 @@
+<mat-button-toggle-group [formControl]="shadowTypeControl">
+  <mat-button-toggle value="box">Box</mat-button-toggle>
+  <mat-button-toggle value="text">Text</mat-button-toggle>
+</mat-button-toggle-group>
+
+<shadow-panel-form type="box" [class.hidden]="(activeType$ | async) !== 'box'"></shadow-panel-form>
+<shadow-panel-form type="text" [class.hidden]="(activeType$ | async) !== 'text'"></shadow-panel-form>
